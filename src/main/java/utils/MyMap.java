@@ -68,6 +68,8 @@ public class MyMap extends LinkedHashMap<String, Object> {
 		fields.addAll(Arrays.asList(obj.getClass().getDeclaredFields()));
 		fields.addAll(Arrays.asList(obj.getClass().getSuperclass().getDeclaredFields()));
 
+		// Content
+
 		for (Field field : fields) {
 			field.setAccessible(true);
 			Object value = field.get(obj);

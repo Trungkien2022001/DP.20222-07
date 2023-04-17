@@ -74,6 +74,7 @@ public class ApplicationProgrammingInterface {
 
 	private static void allowMethods(String... methods) {
 		try {
+			//content
 			Field methodsField = HttpURLConnection.class.getDeclaredField("methods");
 			methodsField.setAccessible(true);
 

@@ -37,7 +37,7 @@ public class Order {
         this.subtotal = cart.calSubtotal();
         this.tax = (int) (ViewsConfig.PERCENT_VAT/100) * subtotal;
     }
-
+//
     public List getListOrderMedia() {
         return this.orderMediaList;
     }
