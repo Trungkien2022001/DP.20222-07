@@ -1,7 +1,6 @@
 package views.screen.payment;
 
 import controller.PaymentController;
-import controller.CartController;
 import entity.invoice.Invoice;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -62,12 +61,12 @@ public class PaymentScreenHandler extends BaseScreenHandler {
 	protected void setupData(Object dto) throws Exception {
 		this.invoice = (Invoice) dto;
 	}
-
+	// Procedure cohesion
 	protected void setupFunctionality() throws Exception {
 		btnConfirmPayment.setOnMouseClicked(e -> {
 			try {
 				confirmToPayOrder();
-				((CartController) getBController()).emptyCart();
+				((PaymentController) getBController()).emptyCart();
 			} catch (Exception exp) {
 				System.out.println(exp.getStackTrace());
 			}

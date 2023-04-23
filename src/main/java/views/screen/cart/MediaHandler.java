@@ -26,7 +26,7 @@ import views.screen.FXMLScreenHandler;
 import views.screen.ViewsConfig;
 
 public class MediaHandler extends FXMLScreenHandler {
-
+	////Temporal cohesion có các method được gọi có thể gọi là liên tiếp nhau(liên quan đến thời gian)
 	private static Logger LOGGER = Utils.getLogger(MediaHandler.class.getName());
 
 	@FXML
