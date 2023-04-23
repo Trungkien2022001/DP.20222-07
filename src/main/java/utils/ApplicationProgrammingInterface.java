@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 public class ApplicationProgrammingInterface {
-
+	//// common
 	public static DateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	private static Logger LOGGER = Utils.getLogger(Utils.class.getName());
 
@@ -63,7 +63,7 @@ public class ApplicationProgrammingInterface {
 		LOGGER.info("Respone Info: " + response.toString());
 		return response.toString();
 	}
-
+	//// Coincidental cohesion: class làm quá nhiều việc (get, post, ngoài ra phải làm cả setupConnection với allowmethods)
 	private static HttpURLConnection setupConnection(String url) throws IOException {
 		HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
 		conn.setDoInput(true);
@@ -75,8 +75,8 @@ public class ApplicationProgrammingInterface {
 	private static void allowMethods(String... methods) {
 		try {
 			Field methodsField = HttpURLConnection.class.getDeclaredField("methods");
+			//content
 			methodsField.setAccessible(true);
-
 			Field modifiersField = Field.class.getDeclaredField("modifiers");
 			modifiersField.setAccessible(true);
 			modifiersField.setInt(methodsField, methodsField.getModifiers() & ~Modifier.FINAL);

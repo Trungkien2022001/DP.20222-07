@@ -27,6 +27,7 @@ import views.screen.popup.PopupScreen;
 import views.screen.shipping.ShippingScreenHandler;
 
 public class CartScreenHandler extends BaseScreenHandler {
+	////Temporal cohesion có các method được gọi có thể gọi là liên tiếp nhau(liên quan đến thời gian)
 	private static Logger LOGGER = Utils.getLogger(CartScreenHandler.class.getName());
 
 	@FXML

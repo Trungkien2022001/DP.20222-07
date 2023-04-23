@@ -10,6 +10,7 @@ import entity.db.AIMSDB;
 
 public class Book extends Media {
 
+    //// content
     String author;
     String coverType;
     String publisher;

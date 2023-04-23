@@ -32,7 +32,7 @@ public class PopupScreen extends BaseScreenHandler {
         popup.setImage(imagePath);
         return popup;
     }
-
+    //// Logical cohesion
     public static void success(String message) throws IOException{
         popup(message, ViewsConfig.IMAGE_PATH + "/" + "tickgreen.png", true)
                 .show(true);

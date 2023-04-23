@@ -37,7 +37,7 @@ import views.screen.popup.PopupScreen;
 
 
 public class HomeScreenHandler extends BaseScreenHandler implements Observer {
-
+    //// Coincidental cohesion:Class làm quá nhiều việc không liên quan đến nhau
     public static Logger LOGGER = Utils.getLogger(HomeScreenHandler.class.getName());
 
     @FXML
@@ -212,7 +212,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Observer {
     public void update(Observable observable) {
         if (observable instanceof MediaHandler) update((MediaHandler) observable);
     }
-
+////*stamp coupling vì không dùng các thuộc tính của MediaHandler*/
     private void update(MediaHandler mediaHandler) {
         int requestQuantity = mediaHandler.getRequestQuantity();
         Media media = mediaHandler.getMedia();

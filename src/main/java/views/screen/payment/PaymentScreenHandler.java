@@ -61,7 +61,7 @@ public class PaymentScreenHandler extends BaseScreenHandler {
 	protected void setupData(Object dto) throws Exception {
 		this.invoice = (Invoice) dto;
 	}
-
+	// Procedure cohesion
 	protected void setupFunctionality() throws Exception {
 		btnConfirmPayment.setOnMouseClicked(e -> {
 			try {

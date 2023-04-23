@@ -22,6 +22,7 @@ public class MyMap extends LinkedHashMap<String, Object> {
 	 *         https://hg.openjdk.java.net/jdk8/jdk8/jdk/file/tip/src/share/classes/java/util/Hashtable.java
 	 * @return a {@link String String}.
 	 */
+	//// Coincidental cohesion:Class làm quá nhiều việc
 	public String toJSON() {
 		int max = size() - 1;
 		if (max == -1)
@@ -69,6 +70,7 @@ public class MyMap extends LinkedHashMap<String, Object> {
 		fields.addAll(Arrays.asList(obj.getClass().getSuperclass().getDeclaredFields()));
 
 		for (Field field : fields) {
+			////content
 			field.setAccessible(true);
 			Object value = field.get(obj);
 			try {

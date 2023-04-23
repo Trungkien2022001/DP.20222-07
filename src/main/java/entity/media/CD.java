@@ -7,6 +7,7 @@ import java.util.List;
 
 public class CD extends Media {
 
+    ////content
     String artist;
     String recordLabel;
     String musicType;

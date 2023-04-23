@@ -19,7 +19,6 @@ import java.util.Objects;
  * @author
  */
 public class AuthenticationController extends BaseController {
-
     public boolean isAnonymousSession() {
         try {
             getMainUser();
@@ -38,6 +37,7 @@ public class AuthenticationController extends BaseController {
 
     public void login(String email, String password) throws Exception {
         try {
+            ////data coupling
             User user = new UserDAO().authenticate(email, md5(password));
             if (Objects.isNull(user)) throw new FailLoginException();
             SessionInformation.mainUser = user;
