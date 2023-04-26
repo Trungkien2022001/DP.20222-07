@@ -97,6 +97,9 @@ public class InterbankPayloadConverter {
      * @param responseText
      * @return
      */
+
+     /* temporal cohesion: 2 phương thức convertJSONReponse và getToday */
+
     private MyMap convertJSONResponse(String responseText) {
         MyMap response = null;
         try {
@@ -114,6 +117,7 @@ public class InterbankPayloadConverter {
      * @author hieudm
      * @return the current time as {@link String String}.
      */
+
     private String getToday() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();

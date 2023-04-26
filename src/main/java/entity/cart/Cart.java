@@ -30,7 +30,7 @@ public class Cart {
     public void emptyCart(){
         lstCartItem.clear();
     }
-
+/* communicational cohesion: các phương thức dưới đều sử dụng dữ liệu từ cartItem */
     public int getTotalMedia(){
         int total = 0;
         for (Object obj : lstCartItem) {

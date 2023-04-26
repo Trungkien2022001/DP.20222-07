@@ -34,7 +34,7 @@ public class AuthenticationController extends BaseController {
             throw new ExpiredSessionException();
         } else return SessionInformation.mainUser.cloneInformation();
     }
-
+//// coincidental cohesion: các phương thức login, md5 có thể tách ra 
     public void login(String email, String password) throws Exception {
         try {
             ////data coupling

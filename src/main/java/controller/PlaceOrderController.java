@@ -89,6 +89,8 @@ public class PlaceOrderController extends BaseController {
         else throw new InvalidDeliveryInfoException();
     }
     
+    /* logical cohesion: phương thức validatePhoneNumber khác với 2 phương thức validateName và validateAddress */
+
     public boolean validatePhoneNumber(String phoneNumber) {
         if (phoneNumber.length() != 10) return false;
         if (!phoneNumber.startsWith("0")) return false;

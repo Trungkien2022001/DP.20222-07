@@ -103,6 +103,9 @@ public class PaymentController extends BaseController {
 		return result;
 	}
 	////data coupling
+
+	/* coincidental cohesion: phương thức emptyCart không có liên hệ với các phương thức ở trên,
+	 có thể được chuyển sang lớp ViewCartController để trở thành communicational cohesion */
 	public void emptyCart(){
         SessionInformation.cartInstance.emptyCart();
     }
