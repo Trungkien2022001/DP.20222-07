@@ -50,7 +50,7 @@ public class Order {
     public DeliveryInfo getDeliveryInfo() {
         return deliveryInfo;
     }
-
+         ///Single Responsibility Principle tránh việc Order phải biết quá nhiều về DeliveryInfo và phương thức tính phí vận chuyển.,
     public void setDeliveryInfo(DeliveryInfo deliveryInfo) {
         this.deliveryInfo = deliveryInfo;
         this.shippingFees = deliveryInfo.calculateShippingFee(this);

@@ -39,7 +39,7 @@ public class Cart {
         }
         return total;
     }
-
+        ///Single Responsibility Principle,Tạo một lớp CartCalculator để tính toán giá trị tổng và số lượng của các CartItem,
     public int calSubtotal(){
         int total = 0;
         for (Object obj : lstCartItem) {
@@ -48,7 +48,7 @@ public class Cart {
         }
         return total;
     }
-
+        ///Single Responsibility Principle Tạo một lớp MediaAvailabilityChecker để kiểm tra tính khả dụng của các Media trong giỏ hàng.,
     public void checkAvailabilityOfProduct() throws SQLException{
         boolean allAvailable = true;
         for (Object object : lstCartItem) {
@@ -59,7 +59,7 @@ public class Cart {
         }
         if (!allAvailable) throw new MediaNotAvailableException("Some media not available");
     }
-    /*stamp coupling do không sử dụng các thuộc tính của Media*/
+        ///Single Responsibility Principle, có thể được tách ra thành một lớp riêng biệt,có một nhiệm vụ duy nhất là kiểm tra tính khả dụng của các Media, và có thể được sử dụng trong nhiều nơi khác nhau trong ứng dụng.
     public CartItem checkMediaInCart(Media media){
         for (CartItem cartItem : lstCartItem) {
             if (cartItem.getMedia().getId() == media.getId()) return cartItem;

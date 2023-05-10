@@ -34,6 +34,7 @@ public class PlaceOrderController extends BaseController {
      * This method checks the availability of product when user click PlaceOrder button
      * @throws SQLException
      */
+        ///Single Responsibility Principle PlaceOrderController vì nó không liên quan đến việc quản lý các đối tượng trong đơn đặt hàng.,
     public void placeOrder() throws SQLException {
         SessionInformation.cartInstance.checkAvailabilityOfProduct();
     }
@@ -52,6 +53,7 @@ public class PlaceOrderController extends BaseController {
      * @param order
      * @return Invoice
      */
+        ///Single Responsibility Principle  việc tạo hóa đơn không phải là trách nhiệm của PlaceOrderController, nó có thể được đặt trong một InvoiceController riêng biệt.,
     public Invoice createInvoice(Order order) {
         return new Invoice(order);
     }
@@ -62,6 +64,7 @@ public class PlaceOrderController extends BaseController {
      * @throws InterruptedException
      * @throws IOException
      */
+        ///Single Responsibility Principle  xử lý thông tin vận chuyển cũng không phải là trách nhiệm của PlaceOrderController,,
     public DeliveryInfo processDeliveryInfo(HashMap info) throws InterruptedException, IOException, InvalidDeliveryInfoException {
         LOGGER.info("Process Delivery Info");
         LOGGER.info(info.toString());
