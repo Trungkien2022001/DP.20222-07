@@ -1,26 +1,17 @@
 package views.screen.home;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.ResourceBundle;
-import java.util.logging.Logger;
-
 import common.exception.MediaNotAvailableException;
 import common.exception.ViewCartException;
 import common.interfaces.Observable;
 import common.interfaces.Observer;
-import controller.*;
+import controller.AuthenticationController;
+import controller.HomeController;
+import controller.SessionInformation;
+import controller.ViewCartController;
 import entity.cart.Cart;
 import entity.cart.CartItem;
 import entity.media.Media;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,7 +24,16 @@ import utils.Utils;
 import views.screen.BaseScreenHandler;
 import views.screen.ViewsConfig;
 import views.screen.cart.CartScreenHandler;
-import views.screen.popup.PopupScreen;
+import views.screen.popup.ErrorPopupScreen;
+import views.screen.popup.SuccessPopupScreen;
+
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Logger;
 
 //Single Responsibility Principle) class "HomeScreenHandler" có quá nhiều phương thức và trách nhiệm khác nhau.
 //Nó không chỉ quản lý giao diện màn hình chính (HomeScreen), mà còn xử lý logic liên quan đến hiển thị danh sách media,
@@ -85,10 +85,10 @@ public class HomeScreenHandler extends BaseScreenHandler implements Observer {
             setupFunctionality();
         } catch (IOException ex) {
             LOGGER.info(ex.getMessage());
-            PopupScreen.error("Error when loading resources.");
+            ErrorPopupScreen.error("Error when loading resources.");
         } catch (Exception ex) {
             LOGGER.info(ex.getMessage());
-            PopupScreen.error(ex.getMessage());
+            ErrorPopupScreen.error(ex.getMessage());
         }
     }
 
@@ -241,12 +241,12 @@ public class HomeScreenHandler extends BaseScreenHandler implements Observer {
             // subtract the quantity and redisplay
             media.setQuantity(media.getQuantity() - requestQuantity);
             numMediaInCart.setText(cart.getTotalMedia() + " media");
-            PopupScreen.success("The media " + media.getTitle() + " added to Cart");
+            SuccessPopupScreen.success("The media " + media.getTitle() + " added to Cart");
         } catch (MediaNotAvailableException exp) {
             try {
                 String message = "Not enough media:\nRequired: " + requestQuantity + "\nAvail: " + media.getQuantity();
                 LOGGER.severe(message);
-                PopupScreen.error(message);
+                ErrorPopupScreen.error(message);
             } catch (Exception e) {
                 LOGGER.severe("Cannot add media to cart: ");
             }
@@ -266,7 +266,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Observer {
             loginScreen.show();
         } catch (Exception ex) {
             try {
-                PopupScreen.error("Cant trigger Login");
+                ErrorPopupScreen.error("Cant trigger Login");
             } catch (Exception ex1) {
                 LOGGER.severe("Cannot login");
                 ex.printStackTrace();

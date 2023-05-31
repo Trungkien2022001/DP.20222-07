@@ -15,7 +15,7 @@ import utils.Utils;
 import views.screen.BaseScreenHandler;
 import views.screen.popup.PopupScreen;
 
-public class IntroScreenHandler extends BaseScreenHandler {
+public abstract class IntroScreenHandler extends BaseScreenHandler {
 
     private static final Logger LOGGER = Utils.getLogger(IntroScreenHandler.class.getName());
 
@@ -48,4 +48,5 @@ public class IntroScreenHandler extends BaseScreenHandler {
         Image image = new Image(file.toURI().toString());
         logo.setImage(image);
     }
+    protected abstract File getLogoFile();
 }

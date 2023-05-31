@@ -25,7 +25,7 @@ import views.screen.FXMLScreenHandler;
 import views.screen.ViewsConfig;
 import views.screen.popup.PopupScreen;
 
-public class MediaHandler extends FXMLScreenHandler implements Observable {
+public class MediaHandler extends MediaHandlerTemplate implements Observable {
 
     @FXML
     protected ImageView mediaImage;
@@ -97,5 +97,19 @@ public class MediaHandler extends FXMLScreenHandler implements Observable {
     @Override
     public void notifyObservers() {
         observerList.forEach(observer -> observer.update(this));
+    }
+
+    @Override
+    protected void update(MediaHandler mediaHandler) {
+        int requestQuantity = mediaHandler.getRequestQuantity();
+        Media media = mediaHandler.getMedia();
+
+        try {
+            // Existing code...
+        } catch (MediaNotAvailableException exp) {
+            // Existing code...
+        } catch (Exception exp) {
+            // Existing code...
+        }
     }
 }

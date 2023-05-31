@@ -23,7 +23,7 @@ public class ConcretePaymentScreenHandler extends PaymentScreenHandler {
         Map<String, String> response = ctrl.payOrder(invoice.getAmount(), contents, cardNumber.getText(), holderName.getText(),
                 expirationDate.getText(), securityCode.getText());
 
-        BaseScreenHandler resultScreen = new ResultScreenHandler(this.stage, ViewsConfig.RESULT_SCREEN_PATH, response);
+        BaseScreenHandler resultScreen = new ConcretePaymentScreenHandler(this.stage, ViewsConfig.RESULT_SCREEN_PATH, invoice);
         resultScreen.setPreviousScreen(this);
         resultScreen.setHomeScreenHandler(homeScreenHandler);
         resultScreen.setScreenTitle("Result Screen");

@@ -96,7 +96,7 @@ public class MediaHandler extends FXMLScreenHandler {
 		initializeSpinner();
 	}
 
-	protected  void initializeSpinner(){
+	protected void initializeSpinner(){
 //		private void initializeSpinner(){
 
 		SpinnerValueFactory<Integer> valueFactory = //
