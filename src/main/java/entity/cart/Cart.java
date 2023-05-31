@@ -11,8 +11,14 @@ public class Cart {
     
     private List<CartItem> lstCartItem;
 
-    public Cart() {
+    private static final Cart cart  = new Cart();
+
+    private Cart() {
         lstCartItem = new ArrayList<>();
+    }
+
+    public static Cart getInstance(){
+        return cart;
     }
 
     public void addCartMedia(CartItem cm){
