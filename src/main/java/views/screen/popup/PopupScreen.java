@@ -12,6 +12,16 @@ import views.screen.ViewsConfig;
 
 import java.io.IOException;
 
+//Single Responsibility Principle) class "PopupScreen" có phương thức phụ trách quá nhiều công việc.
+//Lớp PopupScreen bao gồm hiển thị các loại popup khác nhau (success, error, loading), đặt nội dung và hình ảnh cho popup,
+// điều khiển thời gian hiển thị và đóng popup.
+// Điều này làm cho lớp này không tuân thủ nguyên tắc SRP, vì nó thực hiện nhiều chức năng không liên quan.
+
+//Phương thức show, close và setImage cũng không tuân thủ nguyên tắc SRP.
+
+
+
+
 
 public class PopupScreen extends BaseScreenHandler {
 

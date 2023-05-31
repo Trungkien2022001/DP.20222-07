@@ -35,6 +35,14 @@ import views.screen.ViewsConfig;
 import views.screen.cart.CartScreenHandler;
 import views.screen.popup.PopupScreen;
 
+//Single Responsibility Principle) class "HomeScreenHandler" có quá nhiều phương thức và trách nhiệm khác nhau.
+//Nó không chỉ quản lý giao diện màn hình chính (HomeScreen), mà còn xử lý logic liên quan đến hiển thị danh sách media,
+//xử lý sự kiện click, xử lý đăng nhập, quản lý giỏ hàng, cập nhật dữ liệu và nhiều hơn nữa.
+//Điều này làm cho lớp trở nên phức tạp và khó hiểu, không tuân thủ nguyên tắc SRP.
+
+//Phương thức update(MediaHandler mediaHandler) trong HomeScreenHandler có quá nhiều chức năng, bao gồm
+// kiểm tra số lượng media, xử lý giỏ hàng và hiển thị thông báo.
+
 
 public class HomeScreenHandler extends BaseScreenHandler implements Observer {
     //// Coincidental cohesion:Class làm quá nhiều việc không liên quan đến nhau

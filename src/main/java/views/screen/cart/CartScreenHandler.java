@@ -159,17 +159,23 @@ public class CartScreenHandler extends BaseScreenHandler {
 		vboxCart.getChildren().clear();
 
 		// get list media of cart after check availability
-		List lstMedia = getBController().getListCartMedia();
+//		List lstMedia = getBController().getListCartMedia();
+		List<CartItem> lstMedia = getBController().getListCartMedia();
 
 		try {
-			for (Object cm : lstMedia) {
-
-				// display the attribute of vboxCart media
-				CartItem cartItem = (CartItem) cm;
+//			for (Object cm : lstMedia) {
+//
+//				// display the attribute of vboxCart media
+//				CartItem cartItem = (CartItem) cm;
+//				MediaHandler mediaCartScreen = new MediaHandler(ViewsConfig.CART_MEDIA_PATH, this);
+//				mediaCartScreen.setCartItem(cartItem);
+//
+//				// add spinner
+//				vboxCart.getChildren().add(mediaCartScreen.getContent());
+//			}
+			for (CartItem cartItem : lstMedia) {
 				MediaHandler mediaCartScreen = new MediaHandler(ViewsConfig.CART_MEDIA_PATH, this);
 				mediaCartScreen.setCartItem(cartItem);
-
-				// add spinner
 				vboxCart.getChildren().add(mediaCartScreen.getContent());
 			}
 			// calculate subtotal and amount

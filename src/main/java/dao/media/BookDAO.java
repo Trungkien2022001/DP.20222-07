@@ -14,25 +14,63 @@ import java.util.Date;
  */
 public class BookDAO extends MediaDAO {
 
-    @Override
-    public Media getMediaById(int id) throws SQLException {
-        String sql = "SELECT * FROM "+
-                "aims.Book " +
-                "INNER JOIN aims.Media " +
-                "ON Media.id = Book.id " +
-                "where Media.id = " + id + ";";
-        Statement stm = AIMSDB.getConnection().createStatement();
-        ResultSet res = stm.executeQuery(sql);
-        if(res.next()) {
+//    @Override
+//    public Media getMediaById(int id) throws SQLException {
+//        String sql = "SELECT * FROM "+
+//                "aims.Book " +
+//                "INNER JOIN aims.Media " +
+//                "ON Media.id = Book.id " +
+//                "where Media.id = " + id + ";";
+//        Statement stm = AIMSDB.getConnection().createStatement();
+//        ResultSet res = stm.executeQuery(sql);
+//        if(res.next()) {
+//
+//            // from Media table
+//            String title = "";
+//            String type = res.getString("type");
+//            int price = res.getInt("price");
+//            String category = res.getString("category");
+//            int quantity = res.getInt("quantity");
+//
+//            // from Book table
+//            String author = res.getString("author");
+//            String coverType = res.getString("coverType");
+//            String publisher = res.getString("publisher");
+//            Date publishDate = res.getDate("publishDate");
+//            int numOfPages = res.getInt("numOfPages");
+//            String language = res.getString("language");
+//            String bookCategory = res.getString("bookCategory");
+//
+//            return new Book(id, title, category, price, quantity, type,
+//                    author, coverType, publisher, publishDate, numOfPages, language, bookCategory);
+//
+//        } else {
+//            throw new SQLException();
+//        }
+//    }
+        @Override
+        public Media getMediaById(int id) throws SQLException {
+            String sql = "SELECT * FROM aims.Book " +
+                    "INNER JOIN aims.Media " +
+                    "ON Media.id = Book.id " +
+                    "WHERE Media.id = " + id + ";";
+            Statement stm = AIMSDB.getConnection().createStatement();
+            ResultSet res = stm.executeQuery(sql);
+            if (res.next()) {
+                return createMediaFromResultSet(res);
+            } else {
+                throw new SQLException();
+            }
+        }
 
-            // from Media table
-            String title = "";
-            String type = res.getString("type");
-            int price = res.getInt("price");
+        @Override
+        protected Media createMediaFromResultSet(ResultSet res) throws SQLException {
+            int id = res.getInt("id");
+            String title = res.getString("title");
             String category = res.getString("category");
+            int price = res.getInt("price");
             int quantity = res.getInt("quantity");
-
-            // from Book table
+            String type = res.getString("type");
             String author = res.getString("author");
             String coverType = res.getString("coverType");
             String publisher = res.getString("publisher");
@@ -43,9 +81,6 @@ public class BookDAO extends MediaDAO {
 
             return new Book(id, title, category, price, quantity, type,
                     author, coverType, publisher, publishDate, numOfPages, language, bookCategory);
-
-        } else {
-            throw new SQLException();
         }
-    }
+
 }

@@ -20,6 +20,11 @@ import views.screen.popup.PopupScreen;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
+//Single Responsibility Principle) class "InvoiceScreenHandler" có phương thức phụ trách quá nhiều công việc.
+//setupData(Object dto)
+//		Thiết lập dữ liệu cho các thành phần giao diện người dùng (label, vbox).
+//		Xử lý danh sách invoice.getOrder().getListOrderMedia() để tạo ra các MediaInvoiceScreenHandler và thêm chúng vào vboxItems.
+
 
 public class InvoiceScreenHandler extends BaseScreenHandler {
 	// Procedure cohesion
