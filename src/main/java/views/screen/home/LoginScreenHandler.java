@@ -43,7 +43,7 @@ public class LoginScreenHandler extends BaseScreenHandler{
 
     @FXML
     private PasswordField password;
-
+//// temporal cohesion (constructor, xong đến setupdata xong đến setupFn)
     public LoginScreenHandler(Stage stage, String screenPath) throws IOException{
         super(stage, screenPath);
         try {

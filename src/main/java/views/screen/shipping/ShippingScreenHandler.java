@@ -51,7 +51,8 @@ public class ShippingScreenHandler extends BaseScreenHandler {
 	private ComboBox<String> province;
 
 	private Order order;
-	//// Coincidental cohesion 
+
+	//// Coincidental cohesion
 	public ShippingScreenHandler(Stage stage, String screenPath, Order order) throws IOException {
 		super(stage, screenPath);
 		try {
@@ -66,6 +67,7 @@ public class ShippingScreenHandler extends BaseScreenHandler {
 		}
 	}
 
+	//// temporal cohesion (constructor, xong đến setupdata xong đến setupFn)
 	protected void setupData(Object dto) throws Exception {
 		this.order = (Order) dto;
 		this.province.getItems().addAll(ShippingConfigs.PROVINCES);
@@ -74,8 +76,8 @@ public class ShippingScreenHandler extends BaseScreenHandler {
 
 	protected void setupFunctionality() throws Exception {
 		final BooleanProperty firstTime = new SimpleBooleanProperty(true); // Variable to store the focus on stage load
-		name.focusedProperty().addListener((observable,  oldValue,  newValue) -> {
-			if(newValue && firstTime.get()){
+		name.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue && firstTime.get()) {
 				content.requestFocus(); // Delegate the focus to container
 				firstTime.setValue(false); // Variable value changed for future references
 			}
@@ -88,10 +90,11 @@ public class ShippingScreenHandler extends BaseScreenHandler {
 
 		// validate delivery info and prepare order info
 		preprocessDeliveryInfo();
-		
+
 		// create invoice screen
 		Invoice invoice = getBController().createInvoice(order);
-		BaseScreenHandler InvoiceScreenHandler = new InvoiceScreenHandler(this.stage, ViewsConfig.INVOICE_SCREEN_PATH, invoice);
+		BaseScreenHandler InvoiceScreenHandler = new InvoiceScreenHandler(this.stage, ViewsConfig.INVOICE_SCREEN_PATH,
+				invoice);
 		InvoiceScreenHandler.setPreviousScreen(this);
 		InvoiceScreenHandler.setHomeScreenHandler(homeScreenHandler);
 		InvoiceScreenHandler.setScreenTitle("Invoice Screen");
@@ -119,11 +122,11 @@ public class ShippingScreenHandler extends BaseScreenHandler {
 		order.setDeliveryInfo(deliveryInfo);
 	}
 
-	public PlaceOrderController getBController(){
+	public PlaceOrderController getBController() {
 		return (PlaceOrderController) super.getBController();
 	}
 
-	public void notifyError(){
+	public void notifyError() {
 		// TODO: implement later on if we need
 	}
 

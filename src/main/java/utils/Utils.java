@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 public class Utils {
 
 	////common
+	//// Coincidental 
 	public static DateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	private static Logger LOGGER = getLogger(Utils.class.getName());
 	static {

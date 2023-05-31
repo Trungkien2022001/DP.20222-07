@@ -57,7 +57,7 @@ public class PaymentScreenHandler extends BaseScreenHandler {
 			PopupScreen.error(ex.getMessage());
 		}
 	}
-
+//// temporal cohesion (constructor, xong đến setupdata xong đến setupFn)
 	protected void setupData(Object dto) throws Exception {
 		this.invoice = (Invoice) dto;
 	}

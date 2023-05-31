@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  * @author nguyenlm
  */
 public class PlaceOrderController extends BaseController {
-
+    //// Procedural (create, check, vv)  thực hiện theo trình tự nhất định
     /**
      * Just for logging purpose
      */
@@ -90,7 +90,8 @@ public class PlaceOrderController extends BaseController {
     }
     
     /* logical cohesion: phương thức validatePhoneNumber khác với 2 phương thức validateName và validateAddress */
-
+    ////logical : chỉ viết 1 validate (dùng map, (map gom phone, name, address). xong validate map này) những validate nhỏ set private, map kia có thể chuyển thành class
+     // delivery info ( có những field kia, có method )
     public boolean validatePhoneNumber(String phoneNumber) {
         if (phoneNumber.length() != 10) return false;
         if (!phoneNumber.startsWith("0")) return false;

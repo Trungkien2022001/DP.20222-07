@@ -37,7 +37,7 @@ public class ResultScreenHandler extends BaseScreenHandler {
 		}
 	}
 
-
+//// temporal cohesion (constructor, xong đến setupdata xong đến setupFn)
 	protected void setupData(Object dto) throws Exception {
 		Map<String, String> response = (Map<String, String>) dto;
 		resultLabel.setText(response.get("RESULT"));

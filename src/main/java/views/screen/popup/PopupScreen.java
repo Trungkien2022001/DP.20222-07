@@ -32,7 +32,7 @@ public class PopupScreen extends BaseScreenHandler {
         popup.setImage(imagePath);
         return popup;
     }
-    //// Logical cohesion
+    //// Logical cohesion ()
     public static void success(String message) throws IOException{
         popup(message, ViewsConfig.IMAGE_PATH + "/" + "tickgreen.png", true)
                 .show(true);
@@ -50,7 +50,7 @@ public class PopupScreen extends BaseScreenHandler {
     public void setImage(String path) {
         super.setImage(icon, path);
     }
-
+popupinfo('TYpe', )
     public void show(Boolean autoClose) {
         super.show();
         if (autoClose) close(0.8);

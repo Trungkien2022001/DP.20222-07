@@ -38,6 +38,7 @@ import views.screen.popup.PopupScreen;
 
 public class HomeScreenHandler extends BaseScreenHandler implements Observer {
     //// Coincidental cohesion:Class làm quá nhiều việc không liên quan đến nhau
+    //// temporal cohesion (constructor, xong đến setupdata xong đến setupFn)
     public static Logger LOGGER = Utils.getLogger(HomeScreenHandler.class.getName());
 
     @FXML
