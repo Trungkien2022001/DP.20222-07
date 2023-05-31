@@ -11,7 +11,8 @@ import entity.media.Media;
  * @author nguyenlm
  */
 public class BaseController {
-    
+        // có nhiều lớp con kế thừa từ cùng lớp Media và thực hiện các phương thức khác nhau, chuyển thành Template Method giúp tái sử dụng mã, tăng tính linh hoạt và giảm sự phức tạp của code , chuyển nó thành abstract class
+
     /**
      * The method checks whether the Media in Cart, if it were in, we will return the CartMedia else return null
      * @param media
