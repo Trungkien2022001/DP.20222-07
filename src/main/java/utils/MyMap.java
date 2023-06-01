@@ -12,6 +12,14 @@ import java.util.*;
  * @author hieud
  *
  */
+
+//	Single Responsibility Principle: class "MyMap" thực hiện quá nhiều chức năng bao gồm:
+//	Lưu trữ các cặp key-value trong một đối tượng Map.
+//	Biến đổi các đối tượng Map thành chuỗi JSON.
+//	Biến đổi các đối tượng thành đối tượng Map.
+//	Trích xuất các thuật ngữ từ một chuỗi.
+//	Giải thích một chuỗi JSON và chuyển đổi thành đối tượng MyMap
+
 public class MyMap extends LinkedHashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
 

@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class FXMLScreenHandler {
+public abstract class FXMLScreenHandler  {
 	//// Coincidental cohesion 
 	protected FXMLLoader loader;
 	protected AnchorPane content;
@@ -33,4 +33,5 @@ public class FXMLScreenHandler {
 		Image img = new Image(file.toURI().toString());
 		imv.setImage(img);
 	}
+
 }

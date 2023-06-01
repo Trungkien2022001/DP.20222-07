@@ -24,6 +24,7 @@ import utils.Utils;
 import views.screen.BaseScreenHandler;
 import views.screen.ViewsConfig;
 import views.screen.popup.PopupScreen;
+import views.screen.shipping.ConcreteShippingScreenHandler;
 import views.screen.shipping.ShippingScreenHandler;
 
 public class CartScreenHandler extends BaseScreenHandler {
@@ -106,23 +107,19 @@ public class CartScreenHandler extends BaseScreenHandler {
 
 	public void requestToPlaceOrder() throws SQLException, IOException {
 		try {
-			// create placeOrderController and process the order
 			PlaceOrderController placeOrderController = new PlaceOrderController();
-			if (placeOrderController.getListCartMedia().size() == 0){
+			if (placeOrderController.getListCartMedia().size() == 0) {
 				PopupScreen.error("You don't have anything to place");
 				return;
 			}
 
 			placeOrderController.placeOrder();
-			
-			// display available media
+
 			displayCartWithMediaAvailability();
 
-			// create order
 			Order order = placeOrderController.createOrder();
 
-			// display shipping form
-			ShippingScreenHandler shippingScreenHandler = new ShippingScreenHandler(
+			ShippingScreenHandler shippingScreenHandler = new ConcreteShippingScreenHandler(
 					this.stage, ViewsConfig.SHIPPING_SCREEN_PATH, order);
 			shippingScreenHandler.setPreviousScreen(this);
 			shippingScreenHandler.setHomeScreenHandler(homeScreenHandler);
@@ -131,7 +128,6 @@ public class CartScreenHandler extends BaseScreenHandler {
 			shippingScreenHandler.show();
 
 		} catch (MediaNotAvailableException e) {
-			// if some media are not available then display cart and break usecase Place Order
 			displayCartWithMediaAvailability();
 		}
 	}
@@ -159,17 +155,23 @@ public class CartScreenHandler extends BaseScreenHandler {
 		vboxCart.getChildren().clear();
 
 		// get list media of cart after check availability
-		List lstMedia = getBController().getListCartMedia();
+//		List lstMedia = getBController().getListCartMedia();
+		List<CartItem> lstMedia = getBController().getListCartMedia();
 
 		try {
-			for (Object cm : lstMedia) {
-
-				// display the attribute of vboxCart media
-				CartItem cartItem = (CartItem) cm;
+//			for (Object cm : lstMedia) {
+//
+//				// display the attribute of vboxCart media
+//				CartItem cartItem = (CartItem) cm;
+//				MediaHandler mediaCartScreen = new MediaHandler(ViewsConfig.CART_MEDIA_PATH, this);
+//				mediaCartScreen.setCartItem(cartItem);
+//
+//				// add spinner
+//				vboxCart.getChildren().add(mediaCartScreen.getContent());
+//			}
+			for (CartItem cartItem : lstMedia) {
 				MediaHandler mediaCartScreen = new MediaHandler(ViewsConfig.CART_MEDIA_PATH, this);
 				mediaCartScreen.setCartItem(cartItem);
-
-				// add spinner
 				vboxCart.getChildren().add(mediaCartScreen.getContent());
 			}
 			// calculate subtotal and amount

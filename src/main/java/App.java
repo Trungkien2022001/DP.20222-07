@@ -14,6 +14,7 @@ import javafx.util.Duration;
 import views.screen.BaseScreenHandler;
 import views.screen.ViewsConfig;
 import views.screen.home.*;
+import views.screen.intro.ConcreteIntroScreenHandler;
 import views.screen.intro.IntroScreenHandler;
 
 public class App extends Application {
@@ -26,7 +27,7 @@ public class App extends Application {
 		try {
 
 			// initialize the scene
-			BaseScreenHandler introScreen = new IntroScreenHandler(primaryStage, ViewsConfig.INTRO_SCREEN_PATH);
+			BaseScreenHandler introScreen = new ConcreteIntroScreenHandler(primaryStage, ViewsConfig.INTRO_SCREEN_PATH);
 			introScreen.show();
 
 			// Load splash screen with fade in effect

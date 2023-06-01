@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
-public class ShippingScreenHandler extends BaseScreenHandler {
+public abstract class ShippingScreenHandler extends BaseScreenHandler {
 
 	private static final Logger LOGGER = Utils.getLogger(ShippingScreenHandler.class.getName());
 
@@ -50,9 +50,8 @@ public class ShippingScreenHandler extends BaseScreenHandler {
 	@FXML
 	private ComboBox<String> province;
 
-	private Order order;
-
-	//// Coincidental cohesion
+	protected Order order;
+	//// Coincidental cohesion 
 	public ShippingScreenHandler(Stage stage, String screenPath, Order order) throws IOException {
 		super(stage, screenPath);
 		try {
@@ -86,21 +85,7 @@ public class ShippingScreenHandler extends BaseScreenHandler {
 	}
 
 	@FXML
-	void submitDeliveryInfo(MouseEvent event) throws IOException, InterruptedException, SQLException {
-
-		// validate delivery info and prepare order info
-		preprocessDeliveryInfo();
-
-		// create invoice screen
-		Invoice invoice = getBController().createInvoice(order);
-		BaseScreenHandler InvoiceScreenHandler = new InvoiceScreenHandler(this.stage, ViewsConfig.INVOICE_SCREEN_PATH,
-				invoice);
-		InvoiceScreenHandler.setPreviousScreen(this);
-		InvoiceScreenHandler.setHomeScreenHandler(homeScreenHandler);
-		InvoiceScreenHandler.setScreenTitle("Invoice Screen");
-		InvoiceScreenHandler.setBController(getBController());
-		InvoiceScreenHandler.show();
-	}
+	protected abstract void submitDeliveryInfo(MouseEvent event) throws IOException, InterruptedException, SQLException;
 
 	public void preprocessDeliveryInfo() throws IOException, InterruptedException {
 		// add info to messages

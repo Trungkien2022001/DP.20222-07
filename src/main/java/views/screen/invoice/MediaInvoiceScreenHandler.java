@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import views.screen.FXMLScreenHandler;
 import views.screen.ViewsConfig;
 
-public class MediaInvoiceScreenHandler extends FXMLScreenHandler{
+public abstract  class MediaInvoiceScreenHandler extends FXMLScreenHandler{
 
     @FXML
     private HBox hboxMedia;
@@ -21,24 +21,24 @@ public class MediaInvoiceScreenHandler extends FXMLScreenHandler{
     private VBox imageLogoVbox;
 
     @FXML
-    private ImageView image;
+    protected ImageView image;
 
     @FXML
     private VBox description;
 
     @FXML
-    private Label title;
+    protected Label title;
 
     @FXML
-    private Label numOfProd;
+    protected Label numOfProd;
 
     @FXML
     private Label labelOutOfStock;
 
     @FXML
-    private Label price;
+    protected Label price;
 
-    private OrderItem orderItem;
+    protected OrderItem orderItem;
 
     public MediaInvoiceScreenHandler(String screenPath) throws IOException{
         super(screenPath);
@@ -48,15 +48,12 @@ public class MediaInvoiceScreenHandler extends FXMLScreenHandler{
         this.orderItem = orderItem;
         setMediaInfo();
     }
-    
-    public void setMediaInfo() throws SQLException{
-        title.setText(orderItem.getMedia().getTitle());
-        price.setText(ViewsConfig.getCurrencyFormat(orderItem.getPrice()));
-        numOfProd.setText(String.valueOf(orderItem.getQuantity()));
-        setImage(image, orderItem.getMedia().getImageURL());
-		image.setPreserveRatio(false);
-		image.setFitHeight(90);
-		image.setFitWidth(83);
-    }
 
+    protected abstract void setMediaInfo() throws SQLException;
+
+    protected void setImageProperties() {
+        image.setPreserveRatio(false);
+        image.setFitHeight(90);
+        image.setFitWidth(83);
+    }
 }

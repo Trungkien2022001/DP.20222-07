@@ -16,7 +16,7 @@ import utils.Utils;
 import views.screen.BaseScreenHandler;
 import views.screen.popup.PopupScreen;
 
-public class ResultScreenHandler extends BaseScreenHandler {
+public abstract class ResultScreenHandler extends BaseScreenHandler {
 
 	private static final Logger LOGGER = Utils.getLogger(PaymentScreenHandler.class.getName());
 
@@ -44,9 +44,8 @@ public class ResultScreenHandler extends BaseScreenHandler {
 		messageLabel.setText(response.get("MESSAGE"));
 	}
 
-	protected void setupFunctionality() throws Exception {
-		return;
-	}
+	protected abstract void setupFunctionality() throws Exception;
+
 
 	@FXML
 	private Label pageTitle;

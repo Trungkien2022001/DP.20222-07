@@ -96,7 +96,9 @@ public class MediaHandler extends FXMLScreenHandler {
 		initializeSpinner();
 	}
 
-	private void initializeSpinner(){
+	protected void initializeSpinner(){
+//		private void initializeSpinner(){
+
 		SpinnerValueFactory<Integer> valueFactory = //
 			new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, cartItem.getQuantity());
 		spinner = new Spinner<Integer>(valueFactory);

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class PaymentScreenHandler extends BaseScreenHandler {
+public abstract class PaymentScreenHandler extends BaseScreenHandler {
 
 	private static final Logger LOGGER = Utils.getLogger(PaymentScreenHandler.class.getName());
 
@@ -27,22 +27,22 @@ public class PaymentScreenHandler extends BaseScreenHandler {
 	@FXML
 	private ImageView loadingImage;
 
-	private Invoice invoice;
+	protected Invoice invoice;
 
 	@FXML
 	private Label pageTitle;
 
 	@FXML
-	private TextField cardNumber;
+	protected TextField cardNumber;
 
 	@FXML
-	private TextField holderName;
+	protected TextField holderName;
 
 	@FXML
-	private TextField expirationDate;
+	protected TextField expirationDate;
 
 	@FXML
-	private TextField securityCode;
+	protected TextField securityCode;
 
 	public PaymentScreenHandler(Stage stage, String screenPath, Invoice invoice) throws IOException {
 		super(stage, screenPath);
@@ -73,16 +73,5 @@ public class PaymentScreenHandler extends BaseScreenHandler {
 		});
 	}
 
-	void confirmToPayOrder() throws IOException{
-		String contents = "pay order";
-		PaymentController ctrl = (PaymentController) getBController();
-		Map<String, String> response = ctrl.payOrder(invoice.getAmount(), contents, cardNumber.getText(), holderName.getText(),
-				expirationDate.getText(), securityCode.getText());
-
-		BaseScreenHandler resultScreen = new ResultScreenHandler(this.stage, ViewsConfig.RESULT_SCREEN_PATH, response);
-		resultScreen.setPreviousScreen(this);
-		resultScreen.setHomeScreenHandler(homeScreenHandler);
-		resultScreen.setScreenTitle("Result Screen");
-		resultScreen.show();
-	}
+	protected abstract void confirmToPayOrder() throws IOException;
 }
