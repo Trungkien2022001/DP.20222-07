@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utils.Utils;
 import views.screen.BaseScreenHandler;
+import views.screen.popup.ErrorPopupScreen;
 import views.screen.popup.PopupScreen;
 
 public abstract class ResultScreenHandler extends BaseScreenHandler {
@@ -30,10 +31,10 @@ public abstract class ResultScreenHandler extends BaseScreenHandler {
 			setupFunctionality();
 		} catch (IOException ex) {
 			LOGGER.info(ex.getMessage());
-			PopupScreen.error("Error when loading resources.");
+			ErrorPopupScreen.error("Error when loading resources.");
 		} catch (Exception ex) {
 			LOGGER.info(ex.getMessage());
-			PopupScreen.error(ex.getMessage());
+			ErrorPopupScreen.error(ex.getMessage());
 		}
 	}
 
