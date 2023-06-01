@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import utils.Utils;
 import views.screen.BaseScreenHandler;
 import views.screen.ViewsConfig;
+import views.screen.popup.ErrorPopupScreen;
 import views.screen.popup.PopupScreen;
 import views.screen.shipping.ConcreteShippingScreenHandler;
 import views.screen.shipping.ShippingScreenHandler;
@@ -61,10 +62,10 @@ public class CartScreenHandler extends BaseScreenHandler {
 			setupFunctionality();
 		} catch (IOException ex) {
 			LOGGER.info(ex.getMessage());
-			PopupScreen.error("Error when loading resources.");
+			ErrorPopupScreen.error("Error when loading resources.");
 		} catch (Exception ex) {
 			LOGGER.info(ex.getMessage());
-			PopupScreen.error(ex.getMessage());
+			ErrorPopupScreen.error(ex.getMessage());
 		}
 	}
 
@@ -109,7 +110,7 @@ public class CartScreenHandler extends BaseScreenHandler {
 		try {
 			PlaceOrderController placeOrderController = new PlaceOrderController();
 			if (placeOrderController.getListCartMedia().size() == 0) {
-				PopupScreen.error("You don't have anything to place");
+				ErrorPopupScreen.error("You don't have anything to place");
 				return;
 			}
 
@@ -149,7 +150,7 @@ public class CartScreenHandler extends BaseScreenHandler {
 		labelVAT.setText(ViewsConfig.getCurrencyFormat(vat));
 		labelAmount.setText(ViewsConfig.getCurrencyFormat(amount));
 	}
-	
+
 	private void displayCartWithMediaAvailability(){
 		// clear all old cartMedia
 		vboxCart.getChildren().clear();
