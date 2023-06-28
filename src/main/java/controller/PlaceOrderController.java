@@ -71,6 +71,8 @@ public class PlaceOrderController extends BaseController {
                 String.valueOf(info.get("address")),
                 String.valueOf(info.get("instructions")),
                 new DistanceCalculator());
+         ExpressShippingFeeStrategy shippingFeeStrategy = new ExpressShippingFeeStrategy();
+        deliveryInfo.setShippingFeeStrategy(shippingFeeStrategy);
         System.out.println(deliveryInfo.getProvince());
         return deliveryInfo;
     }

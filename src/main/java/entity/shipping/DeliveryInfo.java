@@ -1,5 +1,7 @@
 package entity.shipping;
-
+import entity.shipping.ExpressShippingFeeStrategy;
+import entity.shipping.NormalShippingFeeStrategy;
+import entity.shipping.ShippingFeeStrategy;
 import controller.DistanceCalculator;
 import entity.order.Order;
 
@@ -11,20 +13,26 @@ public class DeliveryInfo {
     protected String address;
     protected String shippingInstructions;
     protected DistanceCalculator distanceCalculator;
+    protected ShippingFeeStrategy shippingFeeStrategy;
 
-    public DeliveryInfo(String name, String phone, String province, String address, String shippingInstructions, DistanceCalculator distanceCalculator) {
+    public DeliveryInfo(String name, String phone, String province, String address, String shippingInstructions, DistanceCalculator distanceCalculator,ShippingFeeStrategy shippingFeeStrategy) {
         this.name = name;
         this.phone = phone;
         this.province = province;
         this.address = address;
         this.shippingInstructions = shippingInstructions;
         this.distanceCalculator = distanceCalculator;
+
+         // Thiết lập shippingFeeStrategy là ExpressShippingFeeStrategy
+       this.shippingFeeStrategy = shippingFeeStrategy;
     }
- ////*stamp coupling vì không sử dụng các thuộc tính của order*/
-    public int calculateShippingFee(Order order) {
-        int distance = distanceCalculator.calculateDistance(address, province);
-        return (int) (distance * 1.2);
+
+    public int calculateShippingFee() {
+    double distance = distanceCalculator.calculateDistance(address, province);
+    int shippingFee = shippingFeeStrategy.calculateShippingFee(distance);
+    return shippingFee;
     }
+
 
     public String getName() {
         return name;

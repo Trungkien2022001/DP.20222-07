@@ -1,10 +1,4 @@
-package entity.payment;
-
-/**
- * @author
- */
 public class CreditCard {
-
     private String cardCode;
     private String owner;
     private String dateExpired;
@@ -16,4 +10,6 @@ public class CreditCard {
         this.dateExpired = dateExpired;
         this.cvvCode = cvvCode;
     }
+
+    // Các getter và setter
 }
