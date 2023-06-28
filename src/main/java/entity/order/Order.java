@@ -51,11 +51,12 @@ public class Order {
         return deliveryInfo;
     }
 
-    public void setDeliveryInfo(DeliveryInfo deliveryInfo) {
+   public void setDeliveryInfo(DeliveryInfo deliveryInfo) {
         this.deliveryInfo = deliveryInfo;
-        this.shippingFees = deliveryInfo.calculateShippingFee(this);
+        ExpressShippingFeeStrategy shippingFeeStrategy = new ExpressShippingFeeStrategy();
+        deliveryInfo.setShippingFeeStrategy(shippingFeeStrategy);
+        this.shippingFees = deliveryInfo.calculateShippingFee();
     }
-
     public List getOrderMediaList() {
         return orderMediaList;
     }

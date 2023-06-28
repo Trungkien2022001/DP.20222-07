@@ -81,6 +81,10 @@ public class PaymentController extends BaseController {
 	 * @return {@link Map Map} represent the payment result with a
 	 *         message.
 	 */
+	  public void setPaymentStrategy(PaymentStrategy paymentStrategy) {
+        this.paymentStrategy = paymentStrategy;
+    }
+	
 	public Map<String, String> payOrder(int amount, String contents, String cardNumber, String cardHolderName,
 			String expirationDate, String securityCode) {
 		Map<String, String> result = new Hashtable<String, String>();
@@ -94,6 +98,11 @@ public class PaymentController extends BaseController {
 
 			this.interbank = new InterbankSubsystem();
 			PaymentTransaction transaction = interbank.payOrder(card, amount, contents);
+
+			  PaymentTransaction transaction = new PaymentTransaction();
+
+
+        		transaction.payOrder(card, amount, contents);
 
 			result.put("RESULT", "PAYMENT SUCCESSFUL!");
 			result.put("MESSAGE", "You have successfully paid the order!");

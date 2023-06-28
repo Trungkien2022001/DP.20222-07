@@ -89,25 +89,31 @@ public abstract class ShippingScreenHandler extends BaseScreenHandler {
 	protected abstract void submitDeliveryInfo(MouseEvent event) throws IOException, InterruptedException, SQLException;
 
 	public void preprocessDeliveryInfo() throws IOException, InterruptedException {
-		// add info to messages
-		HashMap<String, String> messages = new HashMap<>();
-		messages.put("name", name.getText());
-		messages.put("phone", phone.getText());
-		messages.put("address", address.getText());
-		messages.put("instructions", instructions.getText());
-		messages.put("province", province.getValue());
-		DeliveryInfo deliveryInfo;
-		try {
-			// process and validate delivery info
-			deliveryInfo = getBController().processDeliveryInfo(messages);
-		} catch (InvalidDeliveryInfoException e) {
-			// TODO: implement pop up screen
-			throw new InvalidDeliveryInfoException(e.getMessage());
-		}
+    // Thêm thông tin vào messages
+    HashMap<String, String> messages = new HashMap<>();
+    messages.put("name", name.getText());
+    messages.put("phone", phone.getText());
+    messages.put("address", address.getText());
+    messages.put("instructions", instructions.getText());
+    messages.put("province", province.getValue());
 
-		order.setDeliveryInfo(deliveryInfo);
-	}
+    DeliveryInfo deliveryInfo;
+    try {
+        // Xử lý và xác thực thông tin giao hàng
+        ShippingInfo.ShippingFeeStrategy shippingFeeStrategy;
+        if (condition) {
+            shippingFeeStrategy = new ShippingInfo.ExpressShippingFeeStrategy();
+        } else {
+            shippingFeeStrategy = new ShippingInfo.NormalShippingFeeStrategy();
+        }
+        deliveryInfo = new DeliveryInfo(messages, shippingFeeStrategy);
+    } catch (InvalidDeliveryInfoException e) {
+        // TODO: Thực hiện hiển thị thông báo lỗi
+        throw new InvalidDeliveryInfoException(e.getMessage());
+    }
 
+    order.setDeliveryInfo(deliveryInfo);
+}
 	public PlaceOrderController getBController() {
 		return (PlaceOrderController) super.getBController();
 	}
