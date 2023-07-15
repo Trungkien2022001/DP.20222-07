@@ -23,11 +23,13 @@ import javafx.stage.Stage;
 import utils.Utils;
 import views.screen.BaseScreenHandler;
 import views.screen.ViewsConfig;
+import views.screen.popup.ErrorPopup;
 import views.screen.popup.PopupScreen;
 import views.screen.shipping.ShippingScreenHandler;
 
 public class CartScreenHandler extends BaseScreenHandler {
-	////Temporal cohesion có các method được gọi có thể gọi là liên tiếp nhau(liên quan đến thời gian)
+	//// Temporal cohesion có các method được gọi có thể gọi là liên tiếp nhau(liên
+	//// quan đến thời gian)
 	private static Logger LOGGER = Utils.getLogger(CartScreenHandler.class.getName());
 
 	@FXML
@@ -60,7 +62,7 @@ public class CartScreenHandler extends BaseScreenHandler {
 			setupFunctionality();
 		} catch (IOException ex) {
 			LOGGER.info(ex.getMessage());
-			PopupScreen.error("Error when loading resources.");
+			ErrorPopup.showError(ex.getType(), 'HomeScreenHandler')
 		} catch (Exception ex) {
 			LOGGER.info(ex.getMessage());
 			PopupScreen.error(ex.getMessage());
@@ -92,7 +94,7 @@ public class CartScreenHandler extends BaseScreenHandler {
 		});
 	}
 
-	public ViewCartController getBController(){
+	public ViewCartController getBController() {
 		return (ViewCartController) super.getBController();
 	}
 
@@ -108,13 +110,13 @@ public class CartScreenHandler extends BaseScreenHandler {
 		try {
 			// create placeOrderController and process the order
 			PlaceOrderController placeOrderController = new PlaceOrderController();
-			if (placeOrderController.getListCartMedia().size() == 0){
+			if (placeOrderController.getListCartMedia().size() == 0) {
 				PopupScreen.error("You don't have anything to place");
 				return;
 			}
 
 			placeOrderController.placeOrder();
-			
+
 			// display available media
 			displayCartWithMediaAvailability();
 
@@ -131,20 +133,21 @@ public class CartScreenHandler extends BaseScreenHandler {
 			shippingScreenHandler.show();
 
 		} catch (MediaNotAvailableException e) {
-			// if some media are not available then display cart and break usecase Place Order
+			// if some media are not available then display cart and break usecase Place
+			// Order
 			displayCartWithMediaAvailability();
 		}
 	}
 
-	public void updateCart() throws SQLException{
+	public void updateCart() throws SQLException {
 		getBController().checkAvailabilityOfProduct();
 		displayCartWithMediaAvailability();
 	}
 
-	void updateCartAmount(){
+	void updateCartAmount() {
 		// calculate subtotal and amount
 		int subtotal = getBController().getCartSubtotal();
-		int vat = (int)((ViewsConfig.PERCENT_VAT/100)*subtotal);
+		int vat = (int) ((ViewsConfig.PERCENT_VAT / 100) * subtotal);
 		int amount = subtotal + vat;
 		LOGGER.info("amount" + amount);
 
@@ -153,8 +156,8 @@ public class CartScreenHandler extends BaseScreenHandler {
 		labelVAT.setText(ViewsConfig.getCurrencyFormat(vat));
 		labelAmount.setText(ViewsConfig.getCurrencyFormat(amount));
 	}
-	
-	private void displayCartWithMediaAvailability(){
+
+	private void displayCartWithMediaAvailability() {
 		// clear all old cartMedia
 		vboxCart.getChildren().clear();
 
