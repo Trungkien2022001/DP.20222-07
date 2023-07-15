@@ -21,6 +21,7 @@ import entity.cart.CartItem;
 import entity.media.Media;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,6 +35,8 @@ import views.screen.BaseScreenHandler;
 import views.screen.ViewsConfig;
 import views.screen.cart.CartScreenHandler;
 import views.screen.popup.PopupScreen;
+import views.screen.productdetail.ProductDetailScreen;
+import views.screen.productdetail.ProductDetailScreenFactory;
 
 
 public class HomeScreenHandler extends BaseScreenHandler implements Observer {
@@ -69,6 +72,9 @@ public class HomeScreenHandler extends BaseScreenHandler implements Observer {
 
     private List homeItems;
     private AuthenticationController authenticationController;
+
+    private ProductDetailScreenFactory productDetailScreenFactory;
+
 
     public HomeScreenHandler(Stage stage, String screenPath) throws IOException{
         super(stage, screenPath);
@@ -159,24 +165,59 @@ public class HomeScreenHandler extends BaseScreenHandler implements Observer {
         cartImage.setImage(img2);
     }
 
-    public void addMediaHome(List items){
-        ArrayList mediaItems = (ArrayList)((ArrayList) items).clone();
+    public void addMediaHome(List<MediaHandler> items){
         hboxMedia.getChildren().forEach(node -> {
             VBox vBox = (VBox) node;
             vBox.getChildren().clear();
         });
-        while(!mediaItems.isEmpty()){
-            hboxMedia.getChildren().forEach(node -> {
-                int vid = hboxMedia.getChildren().indexOf(node);
+
+        for (MediaHandler media : items) {
+            VBox targetVBox = null;
+            for (Node node : hboxMedia.getChildren()) {
                 VBox vBox = (VBox) node;
-                while(vBox.getChildren().size()<3 && !mediaItems.isEmpty()){
-                    MediaHandler media = (MediaHandler) mediaItems.get(0);
-                    vBox.getChildren().add(media.getContent());
-                    mediaItems.remove(media);
+                if (vBox.getChildren().size() < 3) {
+                    targetVBox = vBox;
+                    break;
                 }
-            });
-            return;
+            }
+            if (targetVBox != null) {
+                // Thêm nút "Add to Cart"
+                Button addToCartButton = new Button("Add to Cart");
+                addToCartButton.setOnAction(event -> {
+                    addMediaToCart(media.getMedia());
+                });
+
+                // Thêm nút "View Details"
+                Button viewDetailsButton = new Button("View Details");
+                viewDetailsButton.setOnAction(event -> {
+                    openProductDetailScreen(media.getMedia());
+                });
+
+                // Tạo layout chứa nút "View Details" và nút "Add to Cart"
+                HBox buttonLayout = new HBox(10);
+                buttonLayout.getChildren().addAll(viewDetailsButton, addToCartButton);
+
+                // Thêm nội dung media và layout nút vào VBox
+                targetVBox.getChildren().addAll(media.getContent(), buttonLayout);
+            }
         }
+    }
+
+    private void addMediaToCart(Media media) {
+        CartScreenHandler cartScreen;
+        try {
+            LOGGER.info("User clicked to view cart");
+            cartScreen = new CartScreenHandler(this.stage, ViewsConfig.CART_SCREEN_PATH);
+            cartScreen.setHomeScreenHandler(this);
+            cartScreen.setBController(new ViewCartController());
+            cartScreen.requestToViewCart(this);
+        } catch (IOException | SQLException e1) {
+            throw new ViewCartException(Arrays.toString(e1.getStackTrace()).replaceAll(", ", "\n"));
+        }
+    }
+    private void openProductDetailScreen(Media media) {
+        ProductDetailScreen productDetailScreen = productDetailScreenFactory.createProductDetailScreen(media);
+        productDetailScreen.display(media);
     }
 
     private void addMenuItem(int position, String text, MenuButton menuButton){
