@@ -82,18 +82,16 @@ public class PaymentController extends BaseController {
 	 *         message.
 	 */
 	public Map<String, String> payOrder(int amount, String contents, String cardNumber, String cardHolderName,
-			String expirationDate, String securityCode) {
+			String expirationDate, String securityCode, PaymentMethodFactory paymentMethodFactory) {
 		Map<String, String> result = new Hashtable<String, String>();
 		result.put("RESULT", "PAYMENT FAILED!");
 		try {
-			this.card = new CreditCard(
-					cardNumber,
-					cardHolderName,
-					getExpirationDate(expirationDate),
-					Integer.parseInt(securityCode));
-
+			this.card = paymentMethodFactory.createMethod(cardNumber, cardHolderName, 
+			Date.getExpirationDate(expirationDate), Integer.parseInt(securityCode))
+			
 			this.interbank = new InterbankSubsystem();
-			PaymentTransaction transaction = interbank.payOrder(card, amount, contents);
+			PaymentTransaction transaction = interbank.payOrder(card, amount, contents, 
+			paymentMethodFactory);
 
 			result.put("RESULT", "PAYMENT SUCCESSFUL!");
 			result.put("MESSAGE", "You have successfully paid the order!");
