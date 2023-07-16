@@ -10,6 +10,7 @@ import controller.SessionInformation;
 import controller.ViewCartController;
 import entity.cart.Cart;
 import entity.cart.CartItem;
+import entity.media.CD;
 import entity.media.Media;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -24,6 +25,7 @@ import utils.Utils;
 import views.screen.BaseScreenHandler;
 import views.screen.ViewsConfig;
 import views.screen.cart.CartScreenHandler;
+<<<<<<< HEAD
 import views.screen.popup.ErrorPopupScreen;
 import views.screen.popup.SuccessPopupScreen;
 
@@ -34,6 +36,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+=======
+import views.screen.popup.IOErrorPopup;
+import views.screen.popup.PopupScreen;
+>>>>>>> master
 
 //Single Responsibility Principle) class "HomeScreenHandler" có quá nhiều phương thức và trách nhiệm khác nhau.
 //Nó không chỉ quản lý giao diện màn hình chính (HomeScreen), mà còn xử lý logic liên quan đến hiển thị danh sách media,
@@ -86,7 +92,13 @@ public class HomeScreenHandler extends BaseScreenHandler implements Observer {
             setupFunctionality();
         } catch (IOException ex) {
             LOGGER.info(ex.getMessage());
+<<<<<<< HEAD
             ErrorPopupScreen.error("Error when loading resources.");
+=======
+//            PopupScreen.error("Error when loading resources.");
+            errorHandler.setIOError(new IOErrorPopup());
+            errorHandler.error();
+>>>>>>> master
         } catch (Exception ex) {
             LOGGER.info(ex.getMessage());
             ErrorPopupScreen.error(ex.getMessage());
@@ -114,7 +126,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Observer {
                 this.homeItems.add(m);
             }
         } catch (SQLException | IOException e){
-            LOGGER.info("Errors occurred: " + e.getMessage());
+            LOGGER.info("Errors occured: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -221,7 +233,21 @@ public class HomeScreenHandler extends BaseScreenHandler implements Observer {
     public void update(Observable observable) {
         if (observable instanceof MediaHandler) update((MediaHandler) observable);
     }
+<<<<<<< HEAD
 ////*stamp coupling vì không dùng các thuộc tính của MediaHandler*/
+=======
+
+    @Override
+    public void watchDetail(Observable observable) {
+        if (observable instanceof MediaHandler) watchDetail((MediaHandler) observable);
+    }
+
+    @Override
+    public void updateCartFromDetail(Observable observable) {
+        if (observable instanceof DetailScreenHandler) update(((DetailScreenHandler) observable).getMediaHandler());
+    }
+
+>>>>>>> master
     private void update(MediaHandler mediaHandler) {
         int requestQuantity = mediaHandler.getRequestQuantity();
         Media media = mediaHandler.getMedia();
@@ -255,6 +281,40 @@ public class HomeScreenHandler extends BaseScreenHandler implements Observer {
         } catch (Exception exp) {
             LOGGER.severe("Cannot add media to cart: ");
             exp.printStackTrace();
+        }
+    }
+
+    // Control -> Điều hướng trang detail (Chấp nhận được vì)
+    private void watchDetail(MediaHandler mediaHandler) {
+        Media media = mediaHandler.getMedia();
+        try {
+            switch (media.getType()){
+                case "dvd": {
+                    DetailScreenHandler detailScreenHandler = new DVDDetailScreenHandler(this.stage, ViewsConfig.DVD_DETAIL_PATH, mediaHandler);
+                    detailScreenHandler.setHomeScreenHandler(this);
+                    detailScreenHandler.setBController(getBController());
+                    detailScreenHandler.show();
+                    break;
+                }
+                case "cd": {
+                    DetailScreenHandler detailScreenHandler = new CDDetailScreenHandler(this.stage, ViewsConfig.CD_DETAIL_PATH, mediaHandler);
+                    detailScreenHandler.setHomeScreenHandler(this);
+                    detailScreenHandler.setBController(getBController());
+                    detailScreenHandler.show();
+                    break;
+                }
+                case "book": {
+                    DetailScreenHandler detailScreenHandler = new BookDetailScreenHandler(this.stage, ViewsConfig.BOOK_DETAIL_PATH, mediaHandler);
+                    detailScreenHandler.setHomeScreenHandler(this);
+                    detailScreenHandler.setBController(getBController());
+                    detailScreenHandler.show();
+                    break;
+                }
+                default:
+                    throw new Exception("Type Not Exits");
+            }
+        }catch (Exception exception){
+            // Exception
         }
     }
 

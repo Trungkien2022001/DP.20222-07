@@ -27,8 +27,12 @@ import java.util.logging.Logger;
 //		Thiết lập dữ liệu cho các thành phần giao diện người dùng (label, vbox).
 //		Xử lý danh sách invoice.getOrder().getListOrderMedia() để tạo ra các MediaInvoiceScreenHandler và thêm chúng vào vboxItems.
 
+<<<<<<< HEAD
 
 public abstract class InvoiceScreenHandler extends BaseScreenHandler {
+=======
+public class InvoiceScreenHandler extends BaseScreenHandler {
+>>>>>>> master
 	// Procedure cohesion
 	private static Logger LOGGER = Utils.getLogger(InvoiceScreenHandler.class.getName());
 

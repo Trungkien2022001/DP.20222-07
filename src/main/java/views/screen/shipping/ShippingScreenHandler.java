@@ -51,7 +51,11 @@ public abstract class ShippingScreenHandler extends BaseScreenHandler {
 	@FXML
 	private ComboBox<String> province;
 
+<<<<<<< HEAD
 	protected Order order;
+=======
+	private Order order;
+>>>>>>> master
 	//// Coincidental cohesion 
 	public ShippingScreenHandler(Stage stage, String screenPath, Order order) throws IOException {
 		super(stage, screenPath);

@@ -48,8 +48,21 @@ public abstract  class MediaInvoiceScreenHandler extends FXMLScreenHandler{
         this.orderItem = orderItem;
         setMediaInfo();
     }
+<<<<<<< HEAD
 
     protected abstract void setMediaInfo() throws SQLException;
+=======
+    
+    public void setMediaInfo() throws SQLException{
+        title.setText(orderItem.getMedia().getTitle());
+        price.setText(ViewsConfig.getCurrencyFormat(orderItem.getPrice()));
+        numOfProd.setText(String.valueOf(orderItem.getQuantity()));
+        setImage(image, orderItem.getMedia().getImageURL());
+		image.setPreserveRatio(false);
+		image.setFitHeight(90);
+		image.setFitWidth(83);
+    }
+>>>>>>> master
 
     protected void setImageProperties() {
         image.setPreserveRatio(false);

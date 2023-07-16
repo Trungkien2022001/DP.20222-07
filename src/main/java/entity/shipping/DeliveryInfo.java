@@ -11,6 +11,7 @@ public class DeliveryInfo {
     protected String address;
     protected String shippingInstructions;
     protected DistanceCalculator distanceCalculator;
+    private ShippingFeeStrategy shippingFeeCal;
 
     public DeliveryInfo(String name, String phone, String province, String address, String shippingInstructions, DistanceCalculator distanceCalculator) {
         this.name = name;
@@ -19,11 +20,12 @@ public class DeliveryInfo {
         this.address = address;
         this.shippingInstructions = shippingInstructions;
         this.distanceCalculator = distanceCalculator;
+        this.shippingFeeCal = shippingFeeCal;
     }
  ////*stamp coupling vì không sử dụng các thuộc tính của order*/
     public int calculateShippingFee(Order order) {
         int distance = distanceCalculator.calculateDistance(address, province);
-        return (int) (distance * 1.2);
+        return shippingFeeCal.CalShippingFeeNew(distance);
     }
 
     public String getName() {

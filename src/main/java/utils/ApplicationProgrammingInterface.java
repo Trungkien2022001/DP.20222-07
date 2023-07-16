@@ -115,7 +115,12 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+<<<<<<< HEAD
 public abstract class ApplicationProgrammingInterface {
+=======
+public class ApplicationProgrammingInterface {
+	//// common
+>>>>>>> master
 	public static DateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	private static Logger LOGGER = Utils.getLogger(Utils.class.getName());
 
@@ -136,6 +141,7 @@ public abstract class ApplicationProgrammingInterface {
 		LOGGER.info("Response Info: " + response.toString());
 		return response.toString();
 	}
+<<<<<<< HEAD
 
 	protected abstract void setRequestMethod(HttpURLConnection conn) throws IOException;
 
@@ -144,6 +150,10 @@ public abstract class ApplicationProgrammingInterface {
 	protected abstract void setRequestBody(HttpURLConnection conn, String data) throws IOException;
 
 	private HttpURLConnection setupConnection(String url) throws IOException {
+=======
+	//// Coincidental cohesion: class làm quá nhiều việc (get, post, ngoài ra phải làm cả setupConnection với allowmethods)
+	private static HttpURLConnection setupConnection(String url) throws IOException {
+>>>>>>> master
 		HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
 		conn.setDoInput(true);
 		conn.setDoOutput(true);
@@ -154,6 +164,7 @@ public abstract class ApplicationProgrammingInterface {
 	protected void allowMethods(String... methods) {
 		try {
 			Field methodsField = HttpURLConnection.class.getDeclaredField("methods");
+			//content
 			methodsField.setAccessible(true);
 			Field modifiersField = Field.class.getDeclaredField("modifiers");
 			modifiersField.setAccessible(true);

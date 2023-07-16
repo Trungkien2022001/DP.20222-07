@@ -12,18 +12,8 @@ import views.screen.ViewsConfig;
 
 import java.io.IOException;
 
-//Single Responsibility Principle) class "PopupScreen" có phương thức phụ trách quá nhiều công việc.
-//Lớp PopupScreen bao gồm hiển thị các loại popup khác nhau (success, error, loading), đặt nội dung và hình ảnh cho popup,
-// điều khiển thời gian hiển thị và đóng popup.
-// Điều này làm cho lớp này không tuân thủ nguyên tắc SRP, vì nó thực hiện nhiều chức năng không liên quan.
 
-//Phương thức show, close và setImage cũng không tuân thủ nguyên tắc SRP.
-
-
-
-
-
-public abstract class PopupScreen extends BaseScreenHandler {
+public class PopupScreen extends BaseScreenHandler {
 
     @FXML
     ImageView icon;
@@ -31,16 +21,10 @@ public abstract class PopupScreen extends BaseScreenHandler {
     @FXML
     Label message;
 
-    public PopupScreen(Stage stage, String screenPath) throws IOException {
-        super(stage, screenPath);
+    public PopupScreen(Stage stage) throws IOException{
+        super(stage, ViewsConfig.POPUP_PATH);
     }
 
-<<<<<<< HEAD
-    protected abstract String getImagePath();
-
-    protected void setMessage(String messageText) {
-        message.setText(messageText);
-=======
     private static PopupScreen popup(String message, String imagePath, Boolean undecorated) throws IOException{
         PopupScreen popup = new PopupScreen(new Stage());
         if (undecorated) popup.stage.initStyle(StageStyle.UNDECORATED);
@@ -52,18 +36,24 @@ public abstract class PopupScreen extends BaseScreenHandler {
     public static void success(String message) throws IOException{
         popup(message, ViewsConfig.IMAGE_PATH + "/" + "tickgreen.png", true)
                 .show(true);
->>>>>>> master
     }
 
-    protected void setImage() {
-        super.setImage(icon, getImagePath());
+    public static void error(String message) throws IOException{
+        popup(message, ViewsConfig.IMAGE_PATH + "/" + "tickerror.png", false)
+                .show(false);
     }
 
-    public void show(boolean autoClose) {
+    public static PopupScreen loading(String message) throws IOException{
+        return popup(message, ViewsConfig.IMAGE_PATH + "/" + "loading.gif", true);
+    }
+
+    public void setImage(String path) {
+        super.setImage(icon, path);
+    }
+
+    public void show(Boolean autoClose) {
         super.show();
-        if (autoClose) {
-            close(0.8);
-        }
+        if (autoClose) close(0.8);
     }
 
     public void show(double time) {
@@ -73,7 +63,7 @@ public abstract class PopupScreen extends BaseScreenHandler {
 
     public void close(double time) {
         PauseTransition delay = new PauseTransition(Duration.seconds(time));
-        delay.setOnFinished(event -> stage.close());
+        delay.setOnFinished( event -> stage.close() );
         delay.play();
     }
 
@@ -82,5 +72,4 @@ public abstract class PopupScreen extends BaseScreenHandler {
 
     protected void setupFunctionality() throws Exception {
     }
-
 }
