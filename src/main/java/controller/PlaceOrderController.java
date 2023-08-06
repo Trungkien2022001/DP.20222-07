@@ -7,6 +7,8 @@ import entity.invoice.Invoice;
 import entity.order.Order;
 import entity.order.OrderItem;
 import entity.shipping.DeliveryInfo;
+import entity.shipping.DistanceCalculatorStrategy;
+import entity.shipping.NewDistanceCalculator;
 import entity.shipping.ShippingConfigs;
 import org.example.DistanceCalculator;
 
@@ -63,6 +65,7 @@ public class PlaceOrderController extends BaseController {
     public DeliveryInfo processDeliveryInfo(HashMap info) throws InterruptedException, IOException, InvalidDeliveryInfoException {
         LOGGER.info("Process Delivery Info");
         LOGGER.info(info.toString());
+        DistanceCalculatorStrategy distanceCalculatorStrategy = new NewDistanceCalculator();
         validateDeliveryInfo(info);
         DeliveryInfo deliveryInfo = new DeliveryInfo(
                 String.valueOf(info.get("name")),
@@ -70,7 +73,7 @@ public class PlaceOrderController extends BaseController {
                 String.valueOf(info.get("province")),
                 String.valueOf(info.get("address")),
                 String.valueOf(info.get("instructions")),
-                new DistanceCalculator());
+                distanceCalculatorStrategy);
         System.out.println(deliveryInfo.getProvince());
         return deliveryInfo;
     }

@@ -10,19 +10,19 @@ public class DeliveryInfo {
     protected String province;
     protected String address;
     protected String shippingInstructions;
-    protected DistanceCalculator distanceCalculator;
+    protected DistanceCalculatorStrategy distanceCalculatorStrategy;
 
-    public DeliveryInfo(String name, String phone, String province, String address, String shippingInstructions, DistanceCalculator distanceCalculator) {
+    public DeliveryInfo(String name, String phone, String province, String address, String shippingInstructions, DistanceCalculatorStrategy distanceCalculatorStrategy) {
         this.name = name;
         this.phone = phone;
         this.province = province;
         this.address = address;
         this.shippingInstructions = shippingInstructions;
-        this.distanceCalculator = distanceCalculator;
+        this.distanceCalculatorStrategy = distanceCalculatorStrategy;
     }
  ////*stamp coupling vì không sử dụng các thuộc tính của order*/
     public int calculateShippingFee(Order order) {
-        int distance = distanceCalculator.calculateDistance(address, province);
+        int distance = distanceCalculatorStrategy.calculateDistance(address, province);
         return (int) (distance * 1.2);
     }
 
