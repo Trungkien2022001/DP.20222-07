@@ -10,8 +10,12 @@ import common.exception.UnrecognizedException;
 import entity.cart.Cart;
 import entity.payment.CreditCard;
 import entity.payment.PaymentTransaction;
+import entity.payment.DomesticCard;
 import subsystem.InterbankInterface;
 import subsystem.InterbankSubsystem;
+import subsystem.interbank.PayStrategy;
+import subsystem.interbank.InterbankCreditCardController;
+import subsystem.interbank.InterbankDomesticCardController;
 
 
 /**
@@ -26,12 +30,14 @@ public class PaymentController extends BaseController {
 	/**
 	 * Represent the card used for payment
 	 */
-	private CreditCard card;
+	private Card card;
 
 	/**
 	 * Represent the Interbank subsystem
 	 */
 	private InterbankInterface interbank;
+
+	private PayStrategy payStrategy;
 
 	/**
 	 * Validate the input date which should be in the format "mm/yy", and then
@@ -81,17 +87,56 @@ public class PaymentController extends BaseController {
 	 * @return {@link Map Map} represent the payment result with a
 	 *         message.
 	 */
-	public Map<String, String> payOrder(int amount, String contents, String cardNumber, String cardHolderName,
-			String expirationDate, String securityCode, PaymentMethodFactory paymentMethodFactory) {
+
+	//  public void setStrategy(PayStrategy payStrategy) {
+	// 	this.payStrategy = payStrategy;
+	//  }
+ 	public Map<String, String> payOrder(int amount, String contents, String cardNumber, 
+	String cardHolderName, String expirationDate, String securityCode) {
 		Map<String, String> result = new Hashtable<String, String>();
 		result.put("RESULT", "PAYMENT FAILED!");
 		try {
-			this.card = paymentMethodFactory.createMethod(cardNumber, cardHolderName, 
-			Date.getExpirationDate(expirationDate), Integer.parseInt(securityCode))
+			
+			//this.interbank = new InterbankSubsystem();
+			this.card = new CreditCard(
+				cardNumber,
+				cardHolderName,
+				getExpirationDate(expirationDate),
+				Integer.parseInt(securityCode));
+			//strategy
 			
 			this.interbank = new InterbankSubsystem();
-			PaymentTransaction transaction = interbank.payOrder(card, amount, contents, 
-			paymentMethodFactory);
+			this.interbank.setStrategy(new InterbankCreditCardController());
+
+			PaymentTransaction transaction = interbank.payOrder(card, amount, contents);
+
+			result.put("RESULT", "PAYMENT SUCCESSFUL!");
+			result.put("MESSAGE", "You have successfully paid the order!");
+		} catch (PaymentException | UnrecognizedException ex) {
+			result.put("MESSAGE", ex.getMessage());
+		}
+		return result;
+	}
+
+	public Map<String, String> payOrder(int amount, String contents, String cardNumber, String cardHolderName,
+			String validFromDate, String type, String issuingBank) {
+		Map<String, String> result = new Hashtable<String, String>();
+		result.put("RESULT", "PAYMENT FAILED!");
+		try {
+			
+			//this.interbank = new InterbankSubsystem();
+			this.card = new DomesticCard(
+				cardNumber,
+				cardHolderName,
+				getValidFromDate(validFromDateDate),
+				issuingBank,
+				type);
+			//strategy
+			
+		    this.interbank = new InterbankSubsystem();
+			this.interbank.setStrategy(new InterbankDomesticCardController());
+
+			PaymentTransaction transaction = interbank.payOrder(card, amount, contents);
 
 			result.put("RESULT", "PAYMENT SUCCESSFUL!");
 			result.put("MESSAGE", "You have successfully paid the order!");

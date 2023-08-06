@@ -1,7 +1,8 @@
 package entity.shipping;
 
+import entity.order.Order;
+
 public interface ShippingFeeStrategy {
-    public int calculateShippingFee( int distance) {
-        
-    }
+
+    public abstract int calculateShippingFee( int distance, Order order);
 }

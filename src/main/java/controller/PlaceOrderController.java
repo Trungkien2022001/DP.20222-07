@@ -8,6 +8,8 @@ import entity.order.Order;
 import entity.order.OrderItem;
 import entity.shipping.DeliveryInfo;
 import entity.shipping.ShippingConfigs;
+import entity.shipping.ShippingFeeNew;
+
 import org.example.DistanceCalculator;
 
 import java.io.IOException;
@@ -71,6 +73,7 @@ public class PlaceOrderController extends BaseController {
                 String.valueOf(info.get("address")),
                 String.valueOf(info.get("instructions")),
                 new DistanceCalculator());
+                deliveryInfo.setShippingFee(new ShippingFeeNew());
         System.out.println(deliveryInfo.getProvince());
         return deliveryInfo;
     }
@@ -82,7 +85,8 @@ public class PlaceOrderController extends BaseController {
    * @throws IOException
    */
     ////data coupling
-    public void validateDeliveryInfo(HashMap<String, String> info) throws InterruptedException, IOException, InvalidDeliveryInfoException {
+    public void validateDeliveryInfo(HashMap<String, String> info) 
+    throws InterruptedException, IOException, InvalidDeliveryInfoException {
         if (validatePhoneNumber(info.get("phone"))
         || validateName(info.get("name"))
         || validateAddress(info.get("address"))) return;

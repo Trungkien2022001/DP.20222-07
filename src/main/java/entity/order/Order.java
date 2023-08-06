@@ -17,11 +17,26 @@ public class Order {
     private int tax;
     private List orderMediaList;
     protected DeliveryInfo deliveryInfo;
+    private double height;
+    private double width;
+    private double weight;
 
     public Order() {
         this.shippingFees = 0;
         this.subtotal = 0;
         this.tax = 0;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+     public double getWeight() {
+        return weight;
+    }
+
+     public double getWidth() {
+        return width;
     }
 
     public Order(Cart cart) {
