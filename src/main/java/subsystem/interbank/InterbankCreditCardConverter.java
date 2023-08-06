@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * @author
  */
-public class InterbankPayloadConverter {
+public class InterbankCreditCardConverter {
 
     /**
      * Convert from native entity into interbank required format

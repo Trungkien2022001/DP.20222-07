@@ -5,7 +5,7 @@ import entity.payment.PaymentTransaction;
 
 public class InterbankDomesticCardController implements PayStrategy{
 
-	private static InterbankPayloadConverter interbankPayloadConverter = new InterbankPayloadConverter();
+	private static InterbankDomesticCardConverter interbankDomesticCardConverter = new InterbankDomesticCardConverter();
 	private static InterbankBoundary interbankBoundary = new InterbankBoundary();
 
     	public PaymentTransaction refund(Card card, int amount, String contents) {
@@ -13,8 +13,8 @@ public class InterbankDomesticCardController implements PayStrategy{
 	}
 
 	public PaymentTransaction payOrder(Card card, int amount, String contents) {
-		String requestPayload = interbankPayloadConverter.convertToRequestPayload(card, amount, contents);
+		String requestPayload = interbankDomesticCardConverter.convertToRequestPayload(card, amount, contents);
 		String responseText = interbankBoundary.query(InterbankConfigs.PROCESS_TRANSACTION_URL, requestPayload);
-		return interbankPayloadConverter.extractPaymentTransaction(responseText);
+		return interbankDomesticCardConverter.extractPaymentTransaction(responseText);
 	}
 }
